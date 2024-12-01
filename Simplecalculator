@@ -1,0 +1,96 @@
+#include <iostream>
+#include <limits> // For input validation
+
+using namespace std;
+
+// Function for addition
+double add(double a, double b) {
+    return a + b;
+}
+
+// Function for subtraction
+double subtract(double a, double b) {
+    return a - b;
+}
+
+// Function for multiplication
+double multiply(double a, double b) {
+    return a * b;
+}
+
+// Function for division
+double divide(double a, double b) {
+    if (b == 0) {
+        throw invalid_argument("Error: Division by zero is not allowed.");
+    }
+    return a / b;
+}
+
+// Function to handle input validation
+double getValidInput() {
+    double number;
+    while (true) {
+        cin >> number;
+        if (cin.fail()) {
+            cin.clear(); // Clear the error flag
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignore incorrect input
+            cout << "Invalid input. Please enter a valid number: ";
+        } else {
+            break;
+        }
+    }
+    return number;
+}
+
+int main() {
+    double num1, num2, result;
+    int choice;
+
+    cout << "Basic Calculator" << endl;
+    cout << "=================" << endl;
+
+    // Get the first number from user
+    cout << "Enter the first number: ";
+    num1 = getValidInput();
+
+    // Get the second number from user
+    cout << "Enter the second number: ";
+    num2 = getValidInput();
+
+    // Menu for operations
+    cout << "\nSelect the operation:" << endl;
+    cout << "1. Addition (+)" << endl;
+    cout << "2. Subtraction (-)" << endl;
+    cout << "3. Multiplication (*)" << endl;
+    cout << "4. Division (/)" << endl;
+    cout << "Enter your choice (1-4): ";
+    cin >> choice;
+
+    // Perform the operation based on user choice
+    try {
+        switch (choice) {
+            case 1:
+                result = add(num1, num2);
+                cout << "Result: " << num1 << " + " << num2 << " = " << result << endl;
+                break;
+            case 2:
+                result = subtract(num1, num2);
+                cout << "Result: " << num1 << " - " << num2 << " = " << result << endl;
+                break;
+            case 3:
+                result = multiply(num1, num2);
+                cout << "Result: " << num1 << " * " << num2 << " = " << result << endl;
+                break;
+            case 4:
+                result = divide(num1, num2);
+                cout << "Result: " << num1 << " / " << num2 << " = " << result << endl;
+                break;
+            default:
+                cout << "Invalid choice! Please select a valid operation (1-4)." << endl;
+        }
+    } catch (const invalid_argument &e) {
+        cout << e.what() << endl;
+    }
+
+    return 0;
+}
