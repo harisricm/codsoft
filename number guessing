@@ -1,0 +1,65 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+
+using namespace std;
+
+// Function to generate a random number within a given range
+int generateRandomNumber(int lower, int upper) {
+    return rand() % (upper - lower + 1) + lower;
+}
+
+// Function to display the instructions
+void displayInstructions() {
+    cout << "Welcome to the Guessing Game!" << endl;
+    cout << "I have selected a random number between a specified range." << endl;
+    cout << "Your task is to guess the number!" << endl;
+    cout << "After each guess, I will tell you if your guess is too high or too low." << endl;
+    cout << "Try to guess it in the least number of attempts!" << endl;
+}
+
+int main() {
+    int lowerBound, upperBound, randomNumber, userGuess;
+    int attempts = 0;
+    bool guessedCorrectly = false;
+
+    // Initialize random number generator
+    srand(static_cast<unsigned int>(time(0)));
+
+    // Display game instructions
+    displayInstructions();
+
+    // Get the range from the user
+    cout << "Enter the lower bound of the range: ";
+    cin >> lowerBound;
+    cout << "Enter the upper bound of the range: ";
+    cin >> upperBound;
+
+    // Validate the range input
+    if (lowerBound >= upperBound) {
+        cout << "Invalid range. The lower bound must be less than the upper bound." << endl;
+        return 1;
+    }
+
+    // Generate a random number within the range
+    randomNumber = generateRandomNumber(lowerBound, upperBound);
+
+    // Game loop - keep asking for guesses until the correct one is made
+    while (!guessedCorrectly) {
+        cout << "Guess the number between " << lowerBound << " and " << upperBound << ": ";
+        cin >> userGuess;
+        attempts++;
+
+        // Check the user's guess
+        if (userGuess < randomNumber) {
+            cout << "Too low! Try again." << endl;
+        } else if (userGuess > randomNumber) {
+            cout << "Too high! Try again." << endl;
+        } else {
+            guessedCorrectly = true;
+            cout << "Congratulations! You guessed the correct number " << randomNumber << " in " << attempts << " attempts!" << endl;
+        }
+    }
+
+    return 0;
+}
